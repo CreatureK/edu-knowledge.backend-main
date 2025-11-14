@@ -38,6 +38,7 @@ def IaddQaFromJson_bge():
     return jsonify(qaDucomentsIds = res)
 
 
+
 @app.route('/addQaFromJson_bge_by_table', methods=['POST'])
 def IaddQaFromJson_bge_guides():
     data = request.json
