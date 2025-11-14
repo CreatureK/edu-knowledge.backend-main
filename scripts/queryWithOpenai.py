@@ -317,7 +317,7 @@ def queryQADB_bge_mutiple_table(queryMessage):
     document_variable_name = "context"
     stuff_prompt = PromptTemplate.from_template(
         """
-你是一个鸿蒙操作系统(HarmonyOS)的专家，你将根据知识库中的内容回答用户问题。知识库的内容将以如下格式给出。\
+你是一个教育知识库的专家，你将根据知识库中的内容回答用户问题。知识库的内容将以如下格式给出。\
 ```
 exampleQ:
 什么是python
@@ -370,7 +370,6 @@ exampleUrl是当前exampleA与exampleQ的参考链接。exampleUrl可能缺失�
 
     return response_text
 
-
 #240421
 def queryQADB_bge_mutiple_table_for_wechat(queryMessage):
 
@@ -385,7 +384,7 @@ def queryQADB_bge_mutiple_table_for_wechat(queryMessage):
     document_variable_name = "context"
     stuff_prompt = PromptTemplate.from_template(
         """
-你是一个鸿蒙操作系统(HarmonyOS)的专家，你将根据知识库中的内容回答用户问题。知识库的内容将以如下格式给出。\
+你是一个教育知识库的专家，你将根据知识库中的内容回答用户问题。知识库的内容将以如下格式给出。\
 ```
 exampleQ:
 什么是python
