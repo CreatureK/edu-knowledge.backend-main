@@ -9,7 +9,7 @@ def get_markdownurls_from_qadocuments(qadocuments: List[QaDocument]) -> List[str
     markdownurls = [
         (
             "[{exampleQ}]({exampleUrl})".
-                        format(exampleQ = qadoc.question_text,exampleUrl = qadoc.metadata["doc_url"])
+                        format(exampleQ = qadoc.question_text.replace("]", "&rsqb;"),exampleUrl = qadoc.metadata["doc_url"])
         )
         for qadoc in qadocuments
     ]
