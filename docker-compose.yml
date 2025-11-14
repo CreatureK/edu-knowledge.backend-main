@@ -1,0 +1,25 @@
+version: '3.0'
+services:
+  chatdb_backend_dev:
+    image:  kldrgon/chatdb_py_backend:v5
+    container_name: chatdb_backend_dev
+    ports:
+      - 5123:5000
+    environment:
+      - OPENAI_API_BASE=${OPENAI_API_BASE}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - PYTHON_SUPABASE_ANNOKEY=${PYTHON_SUPABASE_ANNOKEY}
+      - PYTHON_SUPABASE_URL=${PYTHON_SUPABASE_URL}
+      - WECHAT_APPID=${WECHAT_APPID}
+      - WECHAT_APPSECRET=${WECHAT_APPSECRET}
+      - WECHAT_APPID_DXY=${WECHAT_APPID_DXY}
+      - WECHAT_APPSECRET_DXY=${WECHAT_APPSECRET_DXY}
+    volumes:
+      - /home/kldrgon/ChatDB/dev/backend/app:/app
+    networks:
+      - supabase_default
+    command: python app.py
+networks:
+  supabase_default:
+    external: true
+

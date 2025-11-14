@@ -1,0 +1,1 @@
+from .initSupabaseClient import supabaseClient

@@ -1,0 +1,45 @@
+# 字节码文件
+__pycache__/
+*.py[cod]
+
+# 包分发 / 构建文件
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+sdist/
+var/
+*.egg
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# 环境目录
+.env
+.venv
+env/
+venv/
+ENV/
+
+# IDE 设置
+.idea/
+.vscode/
+*.swp
+*~
+.project
+.pydevproject
+
+# 操作系统生成的文件
+.DS_Store
+Thumbs.db
+
+# 日志和数据库文件
+*.log
+*.sql
+*.sqlite
+
+# 其他不需要的文件
+*.tar.gz
+*.zip
+*.rar
