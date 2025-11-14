@@ -21,7 +21,6 @@ var/
 env/
 venv/
 ENV/
-.env.example
 
 # IDE 设置
 .idea/
