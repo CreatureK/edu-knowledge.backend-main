@@ -303,6 +303,73 @@ def get_documents_bge(queryMessage):
 
     return documents
     
+#240418
+def queryQADB_bge_mutiple_table(queryMessage):
+
+    qadocuments = get_qadocuments_with_limit(query_message=queryMessage,min_similarity=0.2)
+    markdownurls = get_markdownurls_from_qadocuments(qadocuments)
+    documents = get_langchain_documents_from_qadocuments(qadocuments)
+
+    document_prompt = PromptTemplate(
+        input_variables=["page_content"],
+        template="{page_content}"
+    )
+    document_variable_name = "context"
+    stuff_prompt = PromptTemplate.from_template(
+        """
+你是一个鸿蒙操作系统(HarmonyOS)的专家，你将根据知识库中的内容回答用户问题。知识库的内容将以如下格式给出。\
+```
+exampleQ:
+什么是python
+exampleA:
+python 是一个编程语言
+exampleUrl:
+http://www.example.com
+```
+其中，exampleQ是知识库中的标题，描述了知识的主题，exampleA对应了exampleQ的答案或具体内容, \
+exampleUrl是当前exampleA与exampleQ的参考链接。exampleUrl可能缺失。\
+你将接收到用户提出的问题，并提取上述知识库中的相关信息来回答问题。如果发现知识库中不存在任何与用户提问相关的信息，则严格输出一行字符串,不要对该字符串做任何修改："很抱歉，我没有找到相关信息"；\
+否则输出多组回答。
+
+下面是知识库相关文档：
+```
+{context}
+```
+下面是用户的问题：
+```
+用户问题：{question}
+```
+请按前面的要求输出回答。
+"""
+    )
+#并附上参考链接。参考链接必须附带。
+# ！请注意！输出中，不得修改任何知识库中的链接。切记！
+    endpoint_url = ChatGLM3_endpoint_url
+    # llm = OpenAI(max_tokens=-1,temperature=0.3)
+    llm = ChatGLM3(
+            endpoint_url=endpoint_url,
+            max_tokens=2000,
+            top_p=0.3,
+            verbose=True,
+            timeout=120
+        )
+    llm_chain = LLMChain(llm=llm, prompt=stuff_prompt,verbose=True)
+    
+    stuff_chain = StuffDocumentsChain(
+        llm_chain=llm_chain,
+        document_prompt= document_prompt,
+        document_variable_name= document_variable_name
+    )
+    res = stuff_chain.invoke({'input_documents':documents,'question':queryMessage})
+    
+
+    markdownurls_text = "官方文档参考链接："
+    for url in markdownurls:
+        markdownurls_text += '\n\n' + url
+    response_text = res['output_text'] + "\n\n" + markdownurls_text
+
+    return response_text
+
 
 #240421
 def queryQADB_bge_mutiple_table_for_wechat(queryMessage):
