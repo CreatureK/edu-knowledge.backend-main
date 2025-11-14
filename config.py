@@ -1,0 +1,1 @@
+ChatGLM3_endpoint_url = "http://10.10.109.2:8000/v1/chat/completions"
